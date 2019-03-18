@@ -36,3 +36,8 @@ h5 {
 .description h5 {
   color: teal;
 }
+
+h5,
+p {
+  font-family: Georgia;
+}
