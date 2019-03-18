@@ -9,6 +9,7 @@ h1 {
 h2.destination {
   font-family: cursive;
 }
+
 .title {
   color: teal;
 }
@@ -16,14 +17,18 @@ h2.destination {
 .uppercase {
   text-transform: uppercase;
 }
-
-.publish-time{
+.publish-time {
   color: gray;
 }
-.cursive{
-  font-family:cursive;
+
+.cursive {
+  font-family: cursive;
 }
 
-.capitalize{
-	text-transform: capitalize;
+.capitalize {
+  text-transform: capitalize;
+}
+
+.description h5 {
+  color: teal;
 }
