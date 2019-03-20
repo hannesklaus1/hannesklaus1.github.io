@@ -1,5 +1,5 @@
 body {
-  max-width: 800px;
+  max-width: 1280px;
   margin: auto;
 }
 
@@ -7,23 +7,19 @@ header {
   text-align: center;
   background-image: url("images/header.JPG");
   background-position: 0 75%;
-
 }
 
-h2 {
+header h2 {
   font-size: 4em;
   color: #74a0d2;
   margin: 0;
   padding: 1em 0;
 }
-
 header h3 {
   font-size: 2em;
   color: white;
   margin: 0;
-
 }
-
 header h4 {
   font-size: 0.75em;
   color: white;
@@ -40,4 +36,34 @@ header h4 {
 
 address a {
   color: grey;
+}
+
+main {
+  width: 70%;
+  margin: auto;
+}
+
+main figure {
+  margin-left: 0;
+}
+
+main figcaption {
+  float: left;
+  margin-left: -10em;
+  width:; /* width einstellung kann einen Umbruch erzeugen, wenn die sie kleiner ist als Margin-left  */
+}
+main figure img {
+  width: 90%;
+}
+
+#map {
+  height: 360px;
+  width: 90%;
+  border: 1px solid black;
+}
+.back {
+  float:left;
+}
+.next{
+  float:right;
 }
