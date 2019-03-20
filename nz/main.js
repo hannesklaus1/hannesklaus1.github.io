@@ -10,4 +10,10 @@ console.log("breite:",breite,"länge:",laenge,"Titel:",titel);
 // initialieren der Karte
 
 let karte = L.map("map");
-console.log(karte);
+//console.log(karte);
+
+// auf Ausschnitt zoomen
+karte.setView(
+  [breite,laenge],
+  13
+);
