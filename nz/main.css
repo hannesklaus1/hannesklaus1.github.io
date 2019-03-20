@@ -1,6 +1,7 @@
 body {
   max-width: 1280px;
   margin: auto;
+  font-family: "PT Sans"
 }
 
 header {
@@ -49,7 +50,7 @@ main figure {
 
 main figcaption {
   float: left;
-  margin-left: -10em;
+  margin-left: -12em;
   width:; /* width einstellung kann einen Umbruch erzeugen, wenn die sie kleiner ist als Margin-left  */
 }
 main figure img {
@@ -66,4 +67,16 @@ main figure img {
 }
 .next{
   float:right;
+}
+
+footer {
+  padding:1em 0 3em 0;
+}
+
+@media only screen and (max-width:900){
+  main figure figcaption{
+    float:none;
+    margin-left: 0;
+    width:auto;
+  }
 }
