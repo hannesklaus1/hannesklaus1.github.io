@@ -36,5 +36,8 @@ header h4 {
   border:4px solid white;
   border-radius: 50%;
   margin-top: -50px;
+}
 
+address a {
+  color: grey;
 }
