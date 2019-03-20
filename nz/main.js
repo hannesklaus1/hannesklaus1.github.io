@@ -27,4 +27,4 @@ let pin = L.marker(
 ).addTo(karte);
 
 //popup an Pin setzten
-pin.bindPopup(titel);
+pin.bindPopup(titel).openPopup();
