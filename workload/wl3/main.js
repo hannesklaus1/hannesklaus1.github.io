@@ -1,1 +1,4 @@
-console.log(Math.floor(Math.random() * 50))
+var favoriteFood = 'pizza'
+var numOfSlices = 8
+console.log(favoriteFood)
+console.log(numOfSlices)
