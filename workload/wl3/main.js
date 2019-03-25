@@ -1,4 +1,4 @@
-console.log("'Javascript'")
-console.log(2001)
-console.log('Woohoo! I love to code! #Codacademy')
-console.log(20.49)
+console.log(44+3.5)
+console.log(2019 - 1969)
+console.log(65/240)
+console.log(0.2708*100)
