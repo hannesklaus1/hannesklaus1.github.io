@@ -37,6 +37,7 @@ let Ende = L.marker(
 Start.bindPopup(titel).openPopup();
 Ende.bindPopup(titel2).openPopup();
 
+let markerGruppe =L.featureGroup().addTo(karte);
 
 for (let blick of adlerblicke) {
   let blickpin = L.marker(
