@@ -2,8 +2,9 @@
 const div = document.getElementById("map");
 const breite = div.getAttribute("data-lat");
 const laenge = div.getAttribute("data-lng");
+const breite2 = div.gettAttribute("data2-lat");
+const laenge2 = div.gettAttribute("data2-lng");
 const titel = div.getAttribute("data-title");
-
 
 console.log("breite:",breite,"länge:",laenge,"Titel:",titel);
 
@@ -22,8 +23,12 @@ karte.setView(
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(karte);
 
 //Positionsmarker Hinzufügen
-let pin = L.marker(
+let Start = L.marker(
   [breite,laenge]
+).addTo(karte);
+
+let Ende = L.marker(
+  [breite2, laenge2]
 ).addTo(karte);
 
 //popup an Pin setzten
