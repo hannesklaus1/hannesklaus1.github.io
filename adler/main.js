@@ -45,6 +45,6 @@ for (let blick of adlerblicke) {
     <em> Kunde: ${blick.kunde}</em>`
 
   )
-}
+};
 
-karte.fitBounds(markerGruppe.getBounds())
+karte.fitBounds(markerGruppe.getBounds());
