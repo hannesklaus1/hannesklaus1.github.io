@@ -4,8 +4,8 @@ const breite = div.getAttribute("data-lat");
 const laenge = div.getAttribute("data-lng");
 const breite2 = div.getAttribute("data2-lat");
 const laenge2 = div.getAttribute("data2-lng");
-const titel = div.getAttribute("data-title1");
-const titel2 =div.getAttribute("data-title2");
+const titel = div.getAttribute("data-titel");
+const titel2 =div.getAttribute("data-titel2");
 
 console.log("breite:",breite,"länge:",laenge,"Titel:",titel);
 
@@ -33,5 +33,5 @@ let Ende = L.marker(
 ).addTo(karte);
 
 //popup an Pin setzten
-Start.bindPopup(titel).openPopup(Start: Pinegg);
-Ende.bindPopup(titel2).openPopup(Ende: Steinberg);
+Start.bindPopup(titel).openPopup();
+Ende.bindPopup(titel2).openPopup();

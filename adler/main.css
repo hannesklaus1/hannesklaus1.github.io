@@ -12,18 +12,18 @@ header {
 
 header h2 {
   font-size: 4em;
-  color: #74a0d2;
+  color: white;
   margin: 0;
   padding: 1em 0;
 }
 header h3 {
   font-size: 2em;
-  color: white;
+  color: black;
   margin: 0;
 }
 header h4 {
   font-size: 0.75em;
-  color: white;
+  color: black;
 }
 
 .author {
