@@ -63,39 +63,20 @@ const blick3 = {  // ein Objekt "blick1" erstellt mit div werten
 };
 
 
-let pin3= L.marker(
-  [blick1.lat, blick1.lng]
-).addTo(karte);
-
-pin3.bindPopup(
-  `<h1>Standort ${blick1.standort}</h1>
-  <p>Höhe: ${blick1.seehoehe} </p>`
-);
-let pin4= L.marker(
-  [blick2.lat, blick2.lng]
-).addTo(karte);
-
-pin4.bindPopup(
-  `<h1>Standort ${blick2.standort}</h1>
-  <p>Höhe: ${blick2.seehoehe} </p>`
-);
-let pin5= L.marker(
-  [blick3.lat, blick3.lng]
-).addTo(karte);
-
-pin5.bindPopup(
-  `<h1>Standort ${blick3.standort}</h1>
-  <p>Höhe: ${blick3.seehoehe} </p>`
-);
-
 const adlerblicke = [    // ein array erstellen damit man mit schleife druchgehen kann
   blick1,
   blick2,
   blick3
 ];
 
-for (let blick of aderlbicke) {
+for (let blick of adlerblicke) {
   let blickpin = L.marker(
     [blick.lat, blick.lng]
   ).addTo(karte);
+  blickpin.bindPopup(
+    `<h1> Standort ${blick.standort} </h1>
+    <p> Höhe ${blick.seehoehe} m</p>
+    <em> Kunde: ${blick.kunde}</em>`
+
+  )
 }
