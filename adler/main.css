@@ -50,7 +50,7 @@ main figure {
 
 main figcaption {
   float: left;
-  margin-left: -15em;
+  margin-left: -10em;
   width:; /* width einstellung kann einen Umbruch erzeugen, wenn die sie kleiner ist als Margin-left  */
 }
 main figure img {
