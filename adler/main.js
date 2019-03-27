@@ -14,11 +14,7 @@ let karte = L.map("map");
 //console.log(karte);
 
 // auf Ausschnitt zoomen
-karte.setView(
-  [47.2, 11.2],
-  8
-);
-
+//kann duch Markergruppe und fit to bounds automatisch gerufen werden
 
 //Openstreetmap einbinden
 
@@ -42,7 +38,7 @@ let markerGruppe =L.featureGroup().addTo(karte);
 for (let blick of adlerblicke) {
   let blickpin = L.marker(
     [blick.lat, blick.lng]
-  ).addTo(karte);
+  ).addTo(markerGruppe);
   blickpin.bindPopup(
     `<h1> Standort ${blick.standort} </h1>
     <p> Höhe ${blick.seehoehe} m</p>
@@ -50,3 +46,5 @@ for (let blick of adlerblicke) {
 
   )
 }
+
+karte.fitBounds(markerGruppe.getBounds())
