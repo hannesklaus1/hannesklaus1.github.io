@@ -111,3 +111,5 @@ for (let blick of adlerblicke) {
 karte.fitBounds(markerGruppe.getBounds());
 karte.addControl(new L.Control.Fullscreen());
 var hash = new L.Hash(karte);
+var coords = new L.Control.Coordinates();
+coords.addTo(karte);
