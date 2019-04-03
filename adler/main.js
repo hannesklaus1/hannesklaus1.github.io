@@ -76,9 +76,9 @@ L.control.layers({
   "Geoland Basemap Orthofoto" : kartenLayer.geolandbasemap_ortho,
   "Geoland Basemap Gelaende" : kartenLayer.geolandbasemap_gelande,
   "Geoland Basemap Oberflaeche" : kartenLayer.geolandbasemap_oberfl,
-  "STAMEN Toner " : kartenLayer.stamen_toner,
-  "STAMEN relief " : kartenLayer.stamen_relief,
-  "STAMEN watercolor " : kartenLayer.stamen_watercolor,
+  "STAMEN Toner" : kartenLayer.stamen_toner,
+  "STAMEN relief" : kartenLayer.stamen_relief,
+  "STAMEN watercolor" : kartenLayer.stamen_watercolor,
 }).addTo(karte)
 
 
@@ -105,7 +105,6 @@ for (let blick of adlerblicke) {
     `<h1> Standort ${blick.standort} </h1>
     <p> Höhe ${blick.seehoehe} m</p>
     <em> Kunde: ${blick.kunde}</em>`
-
   )
 };
 
