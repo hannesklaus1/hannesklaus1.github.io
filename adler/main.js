@@ -18,15 +18,45 @@ let karte = L.map("map");
 
 //Openstreetmap einbinden
 
-//L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-//    subdomains: ["a","b","c"],
-//    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-//}).addTo(karte);
+const kartenLayer = {
+  osm :L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+      subdomains: ["a","b","c"],
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+  }),
+  geolandbasemap1: L.tileLayer("https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", {
+    subdomains:["maps", "maps1", "maps2", "maps3","maps4"],
+    attribution:	'Datenquelle: <a href="://https:basemap.at“> basemap.at </a>'
+  }),
+  geolandbasemap_overlay: L.tileLayer("https://{s}.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", {
+    subdomains:["maps", "maps1", "maps2", "maps3","maps4"],
+    attribution:	'Datenquelle: <a href="://https:basemap.at“> basemap.at </a>'
+  }),
+  geolandbasemap_grau: L.tileLayer("https://{s}.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png", {
+    subdomains:["maps", "maps1", "maps2", "maps3","maps4"],
+    attribution:	'Datenquelle: <a href="://https:basemap.at“> basemap.at </a>'
+  }),
+  geolandbasemap_hdpi: L.tileLayer("https://{s}.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jpeg", {
+    subdomains:["maps", "maps1", "maps2", "maps3","maps4"],
+    attribution:	'Datenquelle: <a href="://https:basemap.at“> basemap.at </a>'
+  }),
+  geolandbasemap_ortho: L.tileLayer("https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
+    subdomains:["maps", "maps1", "maps2", "maps3","maps4"],
+    attribution:	'Datenquelle: <a href="://https:basemap.at“> basemap.at </a>'
+  }),
+  geolandbasemap_oberfl: L.tileLayer("https://{s}.wien.gv.at/basemap/bmapoberflaeche/grau/google3857/{z}/{y}/{x}.jpeg", {
+    subdomains:["maps", "maps1", "maps2", "maps3","maps4"],
+    attribution:	'Datenquelle: <a href="://https:basemap.at“> basemap.at </a>'
+  })
+};
 
-L.tileLayer("https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", {
-  subdomains:["maps", "maps1", "maps2", "maps3","maps4"],
-  attribution:	'Datenquelle: <a href="://https:basemap.at“> basemap.at </a>'
-}).addTo(karte);
+//kartenLayer.osm.addTo(karte);
+//kartenLayer.geolandbasemap.addTo(karte);
+//kartenLayer.geolandbasemap1.addTo(karte);
+//kartenLayer.geolandbasemap_overlay.addTo(karte);
+//kartenLayer.geolandbasemap_grau.addTo(karte);
+kartenLayer.geolandbasemap_hdpi.addTo(karte);
+kartenLayer.geolandbasemap_ortho.addTo(karte);
+kartenLayer.geolandbasemap_oberfl.addTo(karte);
 
 //Positionsmarker Hinzufügen
 let Start = L.marker(
