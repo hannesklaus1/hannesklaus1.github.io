@@ -1,4 +1,3 @@
-
 const div = document.getElementById("map");
 const breite = div.getAttribute("data-lat");
 const laenge = div.getAttribute("data-lng");
@@ -11,7 +10,7 @@ let karte = L.map("map");
 
 // auf Ausschnitt zoomen
 karte.setView(
-  [breite,laenge],13
+  [breite, laenge], 13
 );
 
 //Openstreetmap einbinden
@@ -41,21 +40,21 @@ const kartenLayer = {
     subdomains: ["a", "b", "c"],
     attribution: 'Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under CC BY SA.'
   })
-  };
+};
 
-  kartenLayer.osm.addTo(karte);
+kartenLayer.osm.addTo(karte);
 
-  L.control.layers({
-    "NZ_TOPO_50": kartenLayer.NZ_TOPO_50,
-    "NZ_Arial": kartenLayer.NZ_Arial,
-    "STAMEN Toner": kartenLayer.stamen_toner,
-    "STAMEN relief": kartenLayer.stamen_relief,
-    "STAMEN watercolor": kartenLayer.stamen_watercolor,
-  }).addTo(karte);
+L.control.layers({
+  "NZ_TOPO_50": kartenLayer.NZ_TOPO_50,
+  "NZ_Arial": kartenLayer.NZ_Arial,
+  "STAMEN Toner": kartenLayer.stamen_toner,
+  "STAMEN relief": kartenLayer.stamen_relief,
+  "STAMEN watercolor": kartenLayer.stamen_watercolor,
+}).addTo(karte);
 
 //Positionsmarker Hinzufügen
 let pin = L.marker(
-  [breite,laenge]
+  [breite, laenge]
 ).addTo(karte);
 
 
@@ -69,5 +68,5 @@ var hash = new L.Hash(karte);
 var coords = new L.Control.Coordinates();
 coords.addTo(karte);
 karte.on('click', function(e) {
-	coords.setCoordinates(e);
+  coords.setCoordinates(e);
 });
