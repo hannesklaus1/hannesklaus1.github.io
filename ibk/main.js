@@ -62,26 +62,7 @@ kartenLayer.osm.addTo(karte);
     "STAMEN watercolor": kartenLayer.stamen_watercolor,
   }).addTo(karte);
 
-///karte.setView(
-  //[47,11],13
-//)
+karte.setView(
+  [47.267222, 11.392778],15
+)
 let positionsMarker = L.marker([47,11]).addTo(karte);
-
-karte.locate({
-  setView: true,
-  maxZoom: 18,
-  watch: true,
-});
-
-karte.on("locationfound", function(event){
-  console.log(event);
-  positionsMarker.setLatLng(event.latlng);
-
-/// Kreis kann um den Positionsmarker gelegt werden
-//  L.circle([event.latitude, event.longitudex],
-//  {radius: event.accuracy/2}).addTo(karte)
-//});
-
-karte.on("locationerror", function(event){
-  alert("Gut, der Standort kann nicht ermittelt werden.")
-});
