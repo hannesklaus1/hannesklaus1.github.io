@@ -66,3 +66,14 @@ karte.setView(
   [47.267222, 11.392778],15
 )
 let positionsMarker = L.marker([47,11]).addTo(karte);
+
+
+for (let staette of SPORTSTAETTEN) {
+  let coords = L.marker(
+    [staette.lat, staette.lng]
+  ).addTo(karte);
+  coords.bindPopup(
+    `<h1> ${staette.name} </h1>
+    <p> ${staette.typ} m</p>`
+  )
+};
