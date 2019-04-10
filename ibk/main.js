@@ -68,10 +68,10 @@ karte.setView(
 let positionsMarker = L.marker([47,11]).addTo(karte);
 
 
-for (let staette of SPORTSTAETTEN) {
+for (let staette of SPORTSTAETTEN) {   ///For Schleife welche auf die "Objekte des Sport.js file zugreift und jedes einzeln abfragt und ein Icon zuordnet."
   var piktogramm = L.icon({           /// dem Icon ein Piktogramm zuordnen.
-  iconUrl: `icons/icon_${staette.ICON}_schwarz_auf_weiss_250px.png`,
-  iconSize: [20, 20]})
+  iconUrl: `icons/icon_${staette.ICON}_schwarz_auf_weiss_250px.png`, // gibt den Pfad zu den Icons an.
+  iconSize: [20, 20]})    // größe der Icons
 //marker Zeichnen
   let coords = L.marker(
     [staette.lat, staette.lng],{
@@ -81,6 +81,6 @@ for (let staette of SPORTSTAETTEN) {
 //popup hinzufügen
   coords.bindPopup(
     `<h1> ${staette.Name} </h1>
-    <p> ${staette.typ} m</p>`
+    <p> ${staette.typ} m</p>`   /// beschriftet die Popups
 
 )};
