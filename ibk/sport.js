@@ -1,5 +1,4 @@
 const SPORTSTAETTEN =[
-  [
   {
     "OBJECTID": 1,
     "Name": "Klettergarten Roßfall (ÖAV)",

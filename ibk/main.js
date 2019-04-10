@@ -69,11 +69,18 @@ let positionsMarker = L.marker([47,11]).addTo(karte);
 
 
 for (let staette of SPORTSTAETTEN) {
+  var piktogramm = L.icon({           /// dem Icon ein Piktogramm zuordnen.
+  iconUrl: `icons/icon_${staette.ICON}_schwarz_auf_weiss_250px.png`,
+  iconSize: [20, 20]})
+//marker Zeichnen
   let coords = L.marker(
-    [staette.lat, staette.lng]
-  ).addTo(karte);
+    [staette.lat, staette.lng],{
+      icon: piktogramm
+
+    }).addTo(karte);
+//popup hinzufügen
   coords.bindPopup(
-    `<h1> ${staette.name} </h1>
+    `<h1> ${staette.Name} </h1>
     <p> ${staette.typ} m</p>`
-  )
-};
+
+)};
