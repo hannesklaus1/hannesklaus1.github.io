@@ -49,7 +49,7 @@ const kartenLayer = {
 
 kartenLayer.osm.addTo(karte);
 
-  L.control.layers({
+  const layerControl = L.control.layers({
     "Geoland Basemap Map1": kartenLayer.geolandbasemap1,
     "Geoland Basemap Overlay": kartenLayer.geolandbasemap_overlay,
     "Geoland Basemap Grau": kartenLayer.geolandbasemap_grau,
@@ -66,14 +66,43 @@ karte.setView(
   [47.267222, 11.392778],15
 );
 
+async function loadStations() {
+  const response = await fetch("https://aws.openweb.cc/stations");
+  const stations = await response.json();
+  const awsTirol = L.featureGroup();
+  L.geoJson(stations)
+  .bindPopup(function(layer) {
+    //console.log("layer ", layer);
+    const date = new Date(layer.feature.properties.date);
+    console.log("Datum: ", date);
+    return `<h4>${layer.feature.properties.name}</h4>
+    Höhe (m): ${layer.feature.geometry.coordinates[2]}
+    Temperatur: ${layer.feature.properties.LT} °C <br>
+    Datum: ${date.toLocaleDateString("de-AT")}
+    Time: ${date.toLocaleTimeString("de-AT")}<br>
+    Windspeed: ${layer.feature.properties.WG ? layer.feature.properties.WG + ' km/h:' : 'keine Daten'}
+    <hr>
+    <footer> Land Tirol - <a href="https://data.tirol.gv.at" >data.tirol.gv.at </a></footer>
+    `;
+  })
+  .addTo(awsTirol);
+  ///awsTirol.addTo(karte);
+  karte.fitBounds(awsTirol.getBounds());
+  layerControl.addOverlay(awsTirol, "Wetterstationen Tirol");
+  const windlayer= L.featureGroup ();
+  L.geoJson(stations, {
+    pointToLayer: function(feature, latlng){
+      if(feature.properties.WR) {
+        return L.marker(latlng,{
+          icon: L.divIcon({
+            html: `<i style= "transform: rotate(${feature.properties.WR}deg" class="fas fa-chevron-up fa-3x"></i>`
+          })
+        });
+      }
+    }
+  }).addTo(windlayer);
+  layerControl.addOverlay(windlayer, "WindRichtungen");
+  windlayer.addTo(karte)
+}
 
-const awsTirol = L.featureGroup();
-L.geoJson(AWS)
-.bindPopup(function(layer) {
-  console.log("layer ", layer);
-  return `Temperatur: ${layer.feature.properties.LT} °C <br>
-  Datum: ${layer.feature.properties.date}`;
-})
-.addTo(awsTirol);
-awsTirol.addTo(karte);
-karte.fitBounds(awsTirol.getBounds());
+loadStations();
