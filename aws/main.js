@@ -49,21 +49,21 @@ const kartenLayer = {
 
 kartenLayer.osm.addTo(karte);
 
-  const layerControl = L.control.layers({
-    "Geoland Basemap Map1": kartenLayer.geolandbasemap1,
-    "Geoland Basemap Overlay": kartenLayer.geolandbasemap_overlay,
-    "Geoland Basemap Grau": kartenLayer.geolandbasemap_grau,
-    "Geoland Basemap HDPI": kartenLayer.geolandbasemap_hdpi,
-    "Geoland Basemap Orthofoto": kartenLayer.geolandbasemap_ortho,
-    "Geoland Basemap Gelaende": kartenLayer.geolandbasemap_gelande,
-    "Geoland Basemap Oberflaeche": kartenLayer.geolandbasemap_oberfl,
-    "STAMEN Toner": kartenLayer.stamen_toner,
-    "STAMEN relief": kartenLayer.stamen_relief,
-    "STAMEN watercolor": kartenLayer.stamen_watercolor,
-  }).addTo(karte);
+const layerControl = L.control.layers({
+  "Geoland Basemap Map1": kartenLayer.geolandbasemap1,
+  "Geoland Basemap Overlay": kartenLayer.geolandbasemap_overlay,
+  "Geoland Basemap Grau": kartenLayer.geolandbasemap_grau,
+  "Geoland Basemap HDPI": kartenLayer.geolandbasemap_hdpi,
+  "Geoland Basemap Orthofoto": kartenLayer.geolandbasemap_ortho,
+  "Geoland Basemap Gelaende": kartenLayer.geolandbasemap_gelande,
+  "Geoland Basemap Oberflaeche": kartenLayer.geolandbasemap_oberfl,
+  "STAMEN Toner": kartenLayer.stamen_toner,
+  "STAMEN relief": kartenLayer.stamen_relief,
+  "STAMEN watercolor": kartenLayer.stamen_watercolor,
+}).addTo(karte);
 
 karte.setView(
-  [47.267222, 11.392778],15
+  [47.267222, 11.392778], 15
 );
 
 async function loadStations() {
@@ -71,11 +71,11 @@ async function loadStations() {
   const stations = await response.json();
   const awsTirol = L.featureGroup();
   L.geoJson(stations)
-  .bindPopup(function(layer) {
-    //console.log("layer ", layer);
-    const date = new Date(layer.feature.properties.date);
-    console.log("Datum: ", date);
-    return `<h4>${layer.feature.properties.name}</h4>
+    .bindPopup(function(layer) {
+      //console.log("layer ", layer);
+      const date = new Date(layer.feature.properties.date);
+      console.log("Datum: ", date);
+      return `<h4>${layer.feature.properties.name}</h4>
     Höhe (m): ${layer.feature.geometry.coordinates[2]}
     Temperatur: ${layer.feature.properties.LT} °C <br>
     Datum: ${date.toLocaleDateString("de-AT")}
@@ -84,18 +84,24 @@ async function loadStations() {
     <hr>
     <footer> Land Tirol - <a href="https://data.tirol.gv.at" >data.tirol.gv.at </a></footer>
     `;
-  })
-  .addTo(awsTirol);
+    })
+    .addTo(awsTirol);
   ///awsTirol.addTo(karte);
   karte.fitBounds(awsTirol.getBounds());
   layerControl.addOverlay(awsTirol, "Wetterstationen Tirol");
-  const windlayer= L.featureGroup ();
+
+  /// Windrichtung Anzeigen lassen. 
+  const windlayer = L.featureGroup();
   L.geoJson(stations, {
-    pointToLayer: function(feature, latlng){
-      if(feature.properties.WR) {
-        return L.marker(latlng,{
+    pointToLayer: function(feature, latlng) {
+      if (feature.properties.WR) {
+        let color = 'black';
+        if (feature.properties.WG > 20) {
+          color = 'red';
+        }
+        return L.marker(latlng, {
           icon: L.divIcon({
-            html: `<i style= "transform: rotate(${feature.properties.WR}deg" class="fas fa-chevron-up fa-3x"></i>`
+            html: `<i style= "color: ${color}; transform: rotate(${feature.properties.WR}deg" class="fas fa-chevron-up fa-3x"></i>`
           })
         });
       }
