@@ -90,7 +90,7 @@ async function loadStations() {
   karte.fitBounds(awsTirol.getBounds());
   layerControl.addOverlay(awsTirol, "Wetterstationen Tirol");
 
-  /// Windrichtung Anzeigen lassen. 
+  /// Windrichtung Anzeigen lassen.
   const windlayer = L.featureGroup();
   L.geoJson(stations, {
     pointToLayer: function(feature, latlng) {
@@ -108,7 +108,44 @@ async function loadStations() {
     }
   }).addTo(windlayer);
   layerControl.addOverlay(windlayer, "WindRichtungen");
-  windlayer.addTo(karte)
+  ///windlayer.addTo(karte)
+
+  // todo: erstellen der komplettenfarbpalette https://st.wetteronline.de/mdr/p_city_colormap/1.0.84/img/symbology/www/MaximumTemperature.svg
+  const farbpalette =[
+    [0,"blue"],
+    [1, "red"],
+    [2, "orange"]
+
+
+  ]
+
+  /// Die For Schleife weißt die Tempwerte der Farbpalette zu! - hoffentlich
+  const templayer = L.featureGroup();
+  L.geoJson(stations, {
+    pointToLayer: function(feature, latlng) {
+      if (feature.properties.LT) {
+        let color = 'red';
+        for(let i=0; i<farbpalette.length; i++){
+          console.log(farbpalette[i],feature.properties.LT);
+          if(feature.properties.LT < farbpalette[i][0]){
+            color= farbpalette[i][1];
+            break;
+          }
+        }
+        //let color = 'red';
+        if (feature.properties.LT < 0) {
+          color = 'blue';
+        }
+        return L.marker(latlng, {
+          icon: L.divIcon({
+            html: `<div class="temperaturlabel"style="background-color:${color}">${feature.properties.LT}</div>`
+          })
+        });
+      }
+    }
+  }).addTo(templayer);
+  layerControl.addOverlay(templayer, "Temperatur");
+  templayer.addTo(karte)
 }
 
 loadStations();
