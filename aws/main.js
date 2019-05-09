@@ -111,28 +111,68 @@ async function loadStations() {
   ///windlayer.addTo(karte)
 
   // todo: erstellen der komplettenfarbpalette https://st.wetteronline.de/mdr/p_city_colormap/1.0.84/img/symbology/www/MaximumTemperature.svg
-  const farbpalette =[
-    [0,"blue"],
-    [1, "red"],
-    [2, "orange"]
 
+const farbpalette =[
+  //  [0,"blue"],
+  //  [1, "#00537f"],
+  //  [2, "none"],
+  //  [3,"none"],
+  //  [0, "#ffffff"],
+  // [1, "#646664"],
+  //  [2, "#8c8a8c"],
+  //  [3, "#b4b2b4"],
+  //  [4, "#cccecc"],
+  //  [5, "#e4e6e4"],
+  //  [6, "#772d76"],
+  //  [7, "#b123b0"],
+  //  [8, "#d219d1"],
+  //  [9, "#f0f"],
+  //  [10, "#ff94ff"],
+  //  [11, "#3800d1"],
+  //  [12, "#325afe"],
+  //  [13, "#2695ff"],
+  //  [14, "#00cdff"],
+    [1, "#007800"],
+    [2, "#009d00"],
+    [3, "#00bc02"],
+    [4, "#00e200"],
+    [5, "#0f0"],
+    [6, "#fcff00"],
+    [7, "#fdf200"],
+    [8, "#fde100"],
+    [9, "#ffd100"],
+    [10, "#ffbd00"],
+    [11, "#ffad00"],
+    [12, "#ff9c00"],
+    [13, "#ff7800"],
+    [14, "red"],
+    [15, "#f30102"],
+    [16, "#d20000"],
+    [17, "#c10000"],
+    [18, "#b10000"],
+    [19, "#a10000"],
+    [20, "#900000"],
+    [21, "#770100"],
+    [22, "#5f0100"],
+    [23, "#460101"],
+    [24, "#2e0203"],
+    [25, "#00fffe"],
+ ];
 
-  ]
-
-  /// Die For Schleife weißt die Tempwerte der Farbpalette zu! - hoffentlich
+  /// Die For Schleife weißt die Tempwerte der farbpalette zu! - hoffentlich
   const templayer = L.featureGroup();
   L.geoJson(stations, {
     pointToLayer: function(feature, latlng) {
       if (feature.properties.LT) {
         let color = 'red';
         for(let i=0; i<farbpalette.length; i++){
-          console.log(farbpalette[i],feature.properties.LT);
+        //  console.log(farbpalette[i],feature.properties.LT);
           if(feature.properties.LT < farbpalette[i][0]){
             color= farbpalette[i][1];
+            console.log(color, feature.properties.LT)
             break;
           }
         }
-        //let color = 'red';
         if (feature.properties.LT < 0) {
           color = 'blue';
         }
