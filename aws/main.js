@@ -113,7 +113,7 @@ async function loadStations() {
         let color = windpalette[windpalette.length -1][1];
         for (let i = 0; i < windpalette.length; i++) {
                     //console.log(farbPalette[i],feature.properties.LT);
-                    if (feature.properties.WG < windpalette[i][0]) {
+                    if (feature.properties.WR < windpalette[i][0]) {
                         // der Temperaturwert ist kleiner als die Schwelle -> die entsprechende Farbe zuweisen
                         color = windpalette[i][1];
                         console.log(color)
@@ -131,10 +131,10 @@ async function loadStations() {
     }
   }).addTo(windlayer);
   layerControl.addOverlay(windlayer, "WindRichtungen");
-  windlayer.addTo(karte)
+//windlayer.addTo(karte)
 
   // todo: erstellen der komplettenfarbpalette https://st.wetteronline.de/mdr/p_city_colormap/1.0.84/img/symbology/www/MaximumTemperature.svg
-
+  // Danke Janina für die klickarbeit ;))
 const temppalette =[
           [-28, "#646664"],
           [-26, "#8c8a8c"],
@@ -237,7 +237,7 @@ L.geoJson(stations, {
   }
 }).addTo(feuchtelayer);
 layerControl.addOverlay(feuchtelayer, "Relative Feuchte");
-templayer.addTo(karte)
+feuchteayer.addTo(karte)
 
 }
 
