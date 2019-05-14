@@ -92,12 +92,35 @@ async function loadStations() {
 
   /// Windrichtung Anzeigen lassen.
   const windlayer = L.featureGroup();
+  const windpalette = [
+        [-99, "#00b900"],
+        [4, "#10cd24"],
+        [5, "#72d475"],
+        [6, "#fed6d3"],
+        [7, "#ffb6b3"],
+        [8, "#ff9e9a"],
+        [9, "#ff8281"],
+        [10, "#ff6160"],
+        [11, "#ff453c"],
+        [190, "#ff200e"],
+
+];
+
+
   L.geoJson(stations, {
     pointToLayer: function(feature, latlng) {
       if (feature.properties.WR) {
-        let color = 'black';
-        if (feature.properties.WG > 20) {
-          color = 'red';
+        let color = windpalette[windpalette.length -1][1];
+        for (let i = 0; i < windpalette.length; i++) {
+                    //console.log(farbPalette[i],feature.properties.LT);
+                    if (feature.properties.WG < windpalette[i][0]) {
+                        // der Temperaturwert ist kleiner als die Schwelle -> die entsprechende Farbe zuweisen
+                        color = windpalette[i][1];
+                        console.log(color)
+                        break;
+                      } else {
+
+                      }
         }
         return L.marker(latlng, {
           icon: L.divIcon({
@@ -108,74 +131,66 @@ async function loadStations() {
     }
   }).addTo(windlayer);
   layerControl.addOverlay(windlayer, "WindRichtungen");
-  ///windlayer.addTo(karte)
+  windlayer.addTo(karte)
 
   // todo: erstellen der komplettenfarbpalette https://st.wetteronline.de/mdr/p_city_colormap/1.0.84/img/symbology/www/MaximumTemperature.svg
 
-const farbpalette =[
-  //  [0,"blue"],
-  //  [1, "#00537f"],
-  //  [2, "none"],
-  //  [3,"none"],
-  //  [0, "#ffffff"],
-  // [1, "#646664"],
-  //  [2, "#8c8a8c"],
-  //  [3, "#b4b2b4"],
-  //  [4, "#cccecc"],
-  //  [5, "#e4e6e4"],
-  //  [6, "#772d76"],
-  //  [7, "#b123b0"],
-  //  [8, "#d219d1"],
-  //  [9, "#f0f"],
-  //  [10, "#ff94ff"],
-  //  [11, "#3800d1"],
-  //  [12, "#325afe"],
-  //  [13, "#2695ff"],
-  //  [14, "#00cdff"],
-    [1, "#007800"],
-    [2, "#009d00"],
-    [3, "#00bc02"],
-    [4, "#00e200"],
-    [5, "#0f0"],
-    [6, "#fcff00"],
-    [7, "#fdf200"],
-    [8, "#fde100"],
-    [9, "#ffd100"],
-    [10, "#ffbd00"],
-    [11, "#ffad00"],
-    [12, "#ff9c00"],
-    [13, "#ff7800"],
-    [14, "red"],
-    [15, "#f30102"],
-    [16, "#d20000"],
-    [17, "#c10000"],
-    [18, "#b10000"],
-    [19, "#a10000"],
-    [20, "#900000"],
-    [21, "#770100"],
-    [22, "#5f0100"],
-    [23, "#460101"],
-    [24, "#2e0203"],
-    [25, "#00fffe"],
- ];
+const temppalette =[
+          [-28, "#646664"],
+          [-26, "#8c8a8c"],
+          [-24, "#b4b2b4"],
+          [-22, "#cccecc"],
+          [-20, "#e4e6e4"],
+          [-18, "#772d76"],
+          [-16, "#b123b0"],
+          [-14, "#d219d1"],
+          [-12, "#f0f"],
+          [-10, "#ff94ff"],
+          [-8, "#3800d1"],
+          [-6, "#325afe"],
+          [-4, "#2695ff"],
+          [-2, "#00cdff"],
+          [0, "#007800"],
+          [2, "#009d00"],
+          [4, "#00bc02"],
+          [6, "#00e200"],
+          [8, "#0f0"],
+          [10, "#fcff00"],
+          [12, "#fdf200"],
+          [14, "#fde100"],
+          [16, "#ffd100"],
+          [18, "#ffbd00"],
+          [20, "#ffad00"],
+          [22, "#ff9c00"],
+          [24, "#ff7800"],
+          [26, "red"],
+          [28, "#f30102"],
+          [30, "#d20000"],
+          [32, "#c10000"],
+          [34, "#b10000"],
+          [36, "#a10000"],
+          [38, "#900000"],
+          [40, "#770100"],
+          [42, "#5f0100"],
+          [44, "#460101"],
+          [46, "#2e0203"],
+  ];
 
   /// Die For Schleife weißt die Tempwerte der farbpalette zu! - hoffentlich
   const templayer = L.featureGroup();
   L.geoJson(stations, {
     pointToLayer: function(feature, latlng) {
       if (feature.properties.LT) {
-        let color = 'red';
-        for(let i=0; i<farbpalette.length; i++){
+        for(let i=0; i<temppalette.length; i++){
         //  console.log(farbpalette[i],feature.properties.LT);
-          if(feature.properties.LT < farbpalette[i][0]){
-            color= farbpalette[i][1];
+          if(feature.properties.LT < temppalette[i][0]){
+            color= temppalette[i][1];
             console.log(color, feature.properties.LT)
             break;
+          }else{
+
           }
-        }
-        if (feature.properties.LT < 0) {
-          color = 'blue';
-        }
+          }
         return L.marker(latlng, {
           icon: L.divIcon({
             html: `<div class="temperaturlabel"style="background-color:${color}">${feature.properties.LT}</div>`
@@ -186,6 +201,44 @@ const farbpalette =[
   }).addTo(templayer);
   layerControl.addOverlay(templayer, "Temperatur");
   templayer.addTo(karte)
+
+/// Die For Schleife weißt die feuchte der farbpalette zu!
+const feuchtelayer = L.featureGroup();
+const feuchtpalette =[
+   [30, "#EEE"],
+   [40, "#DDD"],
+   [50, "#C6C9CE"],
+   [60, "#BBB"],
+   [70, "#AAC"],
+   [80, "#9998DD"],
+   [90, "#8788EE"],
+   [100, "#7677E1"],
+
+];
+L.geoJson(stations, {
+  pointToLayer: function(feature, latlng) {
+    if (feature.properties.RH) {
+      let color = feuchtpalette[feuchtpalette.length -1][1];
+      for(let i=0; i<feuchtpalette.length; i++){
+        if(feature.properties.RH < feuchtpalette[i][0]){
+          color= temppalette[i][1];
+          console.log(color, feature.properties.RH)
+          break;
+        }else{
+
+        }
+        }
+      return L.marker(latlng, {
+        icon: L.divIcon({
+          html: `<div class="feuchtlabel"style="background-color:${color}">${feature.properties.RH}</div>`
+        })
+      });
+    }
+  }
+}).addTo(feuchtelayer);
+layerControl.addOverlay(feuchtelayer, "Relative Feuchte");
+templayer.addTo(karte)
+
 }
 
 loadStations();
