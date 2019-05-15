@@ -74,7 +74,7 @@ async function loadStations() {
     .bindPopup(function(layer) {
       //console.log("layer ", layer);
       const date = new Date(layer.feature.properties.date);
-      console.log("Datum: ", date);
+      //console.log("Datum: ", date);
       return `<h4>${layer.feature.properties.name}</h4>
     Höhe (m): ${layer.feature.geometry.coordinates[2]}
     Temperatur: ${layer.feature.properties.LT} °C <br>
@@ -91,32 +91,33 @@ async function loadStations() {
   layerControl.addOverlay(awsTirol, "Wetterstationen Tirol");
 
   /// Windrichtung Anzeigen lassen.
+  /// windgeschwindiketie mit der Farbpalette hinterlegen
   const windlayer = L.featureGroup();
   const windpalette = [
-        [-99, "#00b900"],
-        [4, "#10cd24"],
-        [5, "#72d475"],
-        [6, "#fed6d3"],
-        [7, "#ffb6b3"],
-        [8, "#ff9e9a"],
-        [9, "#ff8281"],
-        [10, "#ff6160"],
-        [11, "#ff453c"],
-        [190, "#ff200e"],
+        [11, "#00b900"],
+        [28, "#10cd24"],
+        [38, "#72d475"],
+        [49, "#fed6d3"],
+        [61, "#ffb6b3"],
+        [74, "#ff9e9a"],
+        [88, "#ff8281"],
+        [102, "#ff6160"],
+        [117, "#ff453c"],
+        [1000, "#ff200e"],
 
 ];
 
 
   L.geoJson(stations, {
     pointToLayer: function(feature, latlng) {
-      if (feature.properties.WR) {
+      if (feature.properties.WG) {
         let color = windpalette[windpalette.length -1][1];
         for (let i = 0; i < windpalette.length; i++) {
                     //console.log(farbPalette[i],feature.properties.LT);
-                    if (feature.properties.WR < windpalette[i][0]) {
+                    if (feature.properties.WG < windpalette[i][0]) {
                         // der Temperaturwert ist kleiner als die Schwelle -> die entsprechende Farbe zuweisen
                         color = windpalette[i][1];
-                        console.log(color)
+                        //console.log(color, "windfarbe");
                         break;
                       } else {
 
@@ -129,8 +130,42 @@ async function loadStations() {
         });
       }
     }
+
   }).addTo(windlayer);
   layerControl.addOverlay(windlayer, "WindRichtungen");
+  function getColor(d) {
+      return d < 11 ? '#00b900' :
+             d < 28  ? '#10cd24' :
+             d < 38  ? '#72d475' :
+             d < 49  ? '#fed6d3' :
+             d < 61   ? '#ffb6b3' :
+             d < 74   ? '#ff9e9a' :
+             d < 88   ? '#ff8281' :
+             d < 102   ? '#ff6160' :
+             d < 117   ? '#ff453c' :
+                        '#ff200e';
+  }
+
+  var legend = L.control({position: 'bottomright'});
+
+  legend.onAdd = function (karte) {
+
+      var div = L.DomUtil.create('div', 'info legend'),
+          grades = [11, 28, 38, 49, 61, 74, 88, 102, 117, 120],
+          labels = [];
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+              '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+              grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      }
+
+      return div;
+  };
+
+  legend.addTo(karte);
+
 //windlayer.addTo(karte)
 
   // todo: erstellen der komplettenfarbpalette https://st.wetteronline.de/mdr/p_city_colormap/1.0.84/img/symbology/www/MaximumTemperature.svg
@@ -185,7 +220,7 @@ const temppalette =[
         //  console.log(farbpalette[i],feature.properties.LT);
           if(feature.properties.LT < temppalette[i][0]){
             color= temppalette[i][1];
-            console.log(color, feature.properties.LT)
+            //console.log(color, feature.properties.LT)
             break;
           }else{
 
@@ -237,8 +272,10 @@ L.geoJson(stations, {
   }
 }).addTo(feuchtelayer);
 layerControl.addOverlay(feuchtelayer, "Relative Feuchte");
-feuchteayer.addTo(karte)
+feuchtelayer.addTo(karte)
+
 
 }
+
 
 loadStations();
