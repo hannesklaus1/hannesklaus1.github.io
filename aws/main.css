@@ -33,3 +33,18 @@
      -1px 1px 0 white,
      1px 1px 0 white;
 }
+
+
+<!Leider ist die Serververbindung unterbrochen, während ich versucht habe die Legende ansprechend zu gestalten :( -->
+.legend {
+    border:0.3em;
+    line-height: 18px;
+    background-color: #F2F2F2;
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
