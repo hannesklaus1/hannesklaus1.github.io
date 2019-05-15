@@ -165,7 +165,7 @@ async function loadStations() {
   };
 
   legend.addTo(karte);
-
+/// toDo: wäre cool wenn der layer sich mit der auswahl des Layers ein und Auschalten würden!!!
 windlayer.addTo(karte)
 
   // todo: erstellen der komplettenfarbpalette https://st.wetteronline.de/mdr/p_city_colormap/1.0.84/img/symbology/www/MaximumTemperature.svg
@@ -273,7 +273,6 @@ L.geoJson(stations, {
 }).addTo(feuchtelayer);
 layerControl.addOverlay(feuchtelayer, "Relative Feuchte");
 //feuchtelayer.addTo(karte)
-
 
 }
 
