@@ -158,7 +158,7 @@ async function loadStations() {
       for (var i = 0; i < grades.length; i++) {
           div.innerHTML +=
               '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-              grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+              grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ' [km/h]'+'<br>' : '+');
       }
 
       return div;
@@ -166,7 +166,7 @@ async function loadStations() {
 
   legend.addTo(karte);
 
-//windlayer.addTo(karte)
+windlayer.addTo(karte)
 
   // todo: erstellen der komplettenfarbpalette https://st.wetteronline.de/mdr/p_city_colormap/1.0.84/img/symbology/www/MaximumTemperature.svg
   // Danke Janina für die klickarbeit ;))
@@ -235,7 +235,7 @@ const temppalette =[
     }
   }).addTo(templayer);
   layerControl.addOverlay(templayer, "Temperatur");
-  templayer.addTo(karte)
+  //templayer.addTo(karte)
 
 /// Die For Schleife weißt die feuchte der farbpalette zu!
 const feuchtelayer = L.featureGroup();
@@ -272,7 +272,7 @@ L.geoJson(stations, {
   }
 }).addTo(feuchtelayer);
 layerControl.addOverlay(feuchtelayer, "Relative Feuchte");
-feuchtelayer.addTo(karte)
+//feuchtelayer.addTo(karte)
 
 
 }
