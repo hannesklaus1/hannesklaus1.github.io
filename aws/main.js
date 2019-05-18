@@ -152,15 +152,19 @@ async function loadStations() {
 
       var div = L.DomUtil.create('div', 'info legend'),
           grades = [11, 28, 38, 49, 61, 74, 88, 102, 117, 120],
-          labels = [];
+          labels = [],
+          from, to;
 
       // loop through our density intervals and generate a label with a colored square for each interval
       for (var i = 0; i < grades.length; i++) {
-          div.innerHTML +=
-              '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-              grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ' [km/h]'+'<br>' : '+');
+        from = grades[i];
+        to = grades [i +1];
+        labels.push(
+              '<i style="background:' + getColor(from + 1) + '"></i> ' +
+              from + (to ? '&ndash;' + to + ' [km/h]' : '+'));
       }
-
+      div.innerHTML += '<h4> Windgeschwindigkeit </h4> <b>';
+      div.innerHTML += labels.join('<br>')
       return div;
   };
 
