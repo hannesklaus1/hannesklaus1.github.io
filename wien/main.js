@@ -73,7 +73,7 @@ karte.setView([48.208333, 16.373056], 12);
 
 //Datengrundlage von data.gv laden
 const url = 'https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SPAZIERPUNKTOGD &srsName=EPSG:4326&outputFormat=json'
-
+const urlwlan = 'https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:WLANWIENATOGD&srsName=EPSG:4326&outputFormat=json'
 
 
 
@@ -93,6 +93,47 @@ function makeMarker(feature, latlng) { //Marker definieren
   `);
     return sightMarker; //Marker ausgeben
 }
+
+function makeWLANMarker(feature, latlng) { //Marker definieren
+    const wlanicon = L.icon({ //Icon definieren
+        iconUrl: 'icons/wlan.png',
+        iconSize: [16, 16]
+    });
+    const wlanMarker = L.marker(latlng, { //marker setzen und icon verwenden
+        icon: wlanicon
+    });
+    //Popup definieren: mit den Properties Namen und Bemerkung
+    wlanMarker.bindPopup(`
+         <h3>${feature.properties.NAME}</h3>
+         <p>${feature.properties.ADRESS}</p>
+         <footer> <a target="blank", href="${feature.properties.ANBIETER}">Weblink</a></footer>
+  `);
+    return wlanMarker; //Marker ausgeben
+}
+
+async function loadwlan(urlwlan) { //Vorbereitung wie beim letzten mal
+    const wlanClusterGruppe = L.markerClusterGroup(); // Cluster von Leaflet einfügen (Diese stylsheet und css müssen im html verlinkt werden im header)
+    const responsewlan = await fetch(urlwlan); //Hol die daten vom Url
+    const wlanData = await responsewlan.json(); //Warte drauf und wandel in das json format um
+    const geoJsonwlan = L.geoJson(wlanData, { //Leaflet: soll die Daten aufrufen
+        pointToLayer: makeWLANMarker //wird in eigener Funktion definiert
+    });
+    wlanClusterGruppe.addLayer(geoJsonwlan);
+    karte.addLayer(wlanClusterGruppe);
+    layerControl.addOverlay(wlanClusterGruppe, "Free WLAN-SPOTS")
+//Suchfeld einfügen   muss das geoJson zu einer feature gruppe zusammengeführt werden zum beide durchsuchen
+  //  const suchFeld = new L.Control.Search({
+  //      layer: sehenswürdigkeitenClusterGruppe,
+    //    propertyName: "NAME",
+  //      zoom:17,
+  //      initial: false,
+//    });
+  //  karte.addControl(suchFeld);
+
+}
+
+loadwlan(urlwlan);
+
 
 async function loadSights(url) { //Vorbereitung wie beim letzten mal
     const sehenswürdigkeitenClusterGruppe = L.markerClusterGroup(); // Cluster von Leaflet einfügen (Diese stylsheet und css müssen im html verlinkt werden im header)
@@ -126,7 +167,7 @@ const massstab = L.control.scale({
 massstab.addTo(karte);
 
 
-//plugin runterladen von https://github.com/stefanocudini/leaflet-search/releases und Dateien im Dist ordner in einen neuen Ordner im Wienordner speichern -> Dieser heißt plugins 
+//plugin runterladen von https://github.com/stefanocudini/leaflet-search/releases und Dateien im Dist ordner in einen neuen Ordner im Wienordner speichern -> Dieser heißt plugins
 
 //dann in min.js und min.css in html header einbauen (siehe html!)
 
@@ -160,4 +201,5 @@ async function loadWege(wegeUrl){
     layerControl.addOverlay(wegeJson,"Spazierwege");
 
 }
+
 loadWege(wege)
