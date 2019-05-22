@@ -67,6 +67,60 @@ kartenLayer.bmapgrau.addTo(karte);
 
 karte.addControl(new L.Control.Fullscreen());
 
+//
+//Wikipedia Bounding Box --> artikel Implementierung
+//
+//http://api.geonames.org/wikipediaBoundingBoxJSON?formatted=true&north=44.1&south=-9.9&east=-22.4&west=55.2&username=webmapping&style=full
+const wikipediaGruppe= L.featureGroup().addTo(karte);
+layerControl.addOverlay( wikipediaGruppe, "Wiki Artikel");
+
+async function wikipediaArtikelLaden(url) {
+  wikipediaGruppe.clearLayers();
+//  console.log("Lade", url);
+  const antwort = await fetch(url);
+  const jsonDaten = await antwort.json();
+
+  console.log(jsonDaten);
+  for (let artikel of jsonDaten.geonames) {
+    const wikipediaMarker = L.marker([artikel.lat, artikel.lng], {
+      icon: L.icon({
+        iconUrl: "icons/wiki.png",
+        iconSize: [45,45]
+      })
+
+    }).addTo(wikipediaGruppe);
+
+    wikipediaMarker.bindPopup(`
+        <h3> ${artikel.title}</h3>
+        <p> ${artikel.summary}</p>
+        <hr>
+        <footer><a target="_blank" href= "https://${artikel.wikipediaUrl}">Weblink </a></footer>
+        `);
+  }
+}
+
+let letzteGeonamesUrl = null;
+karte.on("load zoomend moveend", function() {
+  //console.log("Karte geladen", karte.getBounds())
+
+  let ausschnitte = {
+    n: karte.getBounds().getNorth(),
+    e: karte.getBounds().getEast(),
+    s: karte.getBounds().getSouth(),
+    w: karte.getBounds().getWest(),
+  }
+  console.log(ausschnitte);
+
+  const geonamesUrl = `http://api.geonames.org/wikipediaBoundingBoxJSON?formatted=true&north=${ausschnitte.n}&south=${ausschnitte.s}&east=${ausschnitte.e}&west=${ausschnitte.w}&username=webmapping&style=full&maxRows=5&lang=de`;
+/// die If Abfrage stellt sicher, dass die Wikiartikel nur neu geladen werden wenn sich der Ausschnitt verändert.
+  if (geonamesUrl != letzteGeonamesUrl){
+    wikipediaArtikelLaden(geonamesUrl);
+    letzteGeonamesUrl = geonamesUrl;
+  }
+
+
+});
+
 karte.setView([48.208333, 16.373056], 12);
 
 // die Implementierung der Karte startet hier:
