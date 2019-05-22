@@ -6,7 +6,7 @@ const laenge2 = div.getAttribute("data2-lng");
 const titel = div.getAttribute("data-titel");
 const titel2 = div.getAttribute("data-titel2");
 
-console.log("breite:", breite, "länge:", laenge, "Titel:", titel);
+//console.log("breite:", breite, "länge:", laenge, "Titel:", titel);
 
 // initialieren der Karte
 
@@ -109,25 +109,58 @@ new L.GPX(gpx, {
 }).on('loaded', function(e) {
   karte.fitBounds(e.target.getBounds());
 }).on('addline', function(e) {
-  console.log('linie geladen');
+  //console.log('linie geladen');
   const controlElevation = L.control.elevation({
+    //collapsed: true,        für in Karte Implementierte Höhenprofile.
     detachedView: true,
-    elevationDiv: "#elevation-div",
+    position: "bottomright",
+  //  elevationDiv: "#elevation-div",
   });
   controlElevation.addTo(karte);
   controlElevation.addData(e.line);
-}).addTo(karte);
+  const gpxline = e.line.getLatLngs();
+  //console.log(gpxline);
+  for (let i=1; i< gpxline.length; i+=1){
+    //console.log(gpxline[i]);
+    let p1 = gpxline[i-1];
+    let p2 = gpxline[i];
+    let dist = karte.distance(
+      [p1.lat,p1.lng],
+      [p2.lat,p2.lng]
+    );
+    let delta = (p2.meta.ele - p1.meta.ele);
+    let proz = (dist != 0 ? delta / dist * 100.0 : 0).toFixed(1);
+    //console.log("Distanze: ", dist, 'höhendif: ', delta, 'steigung: ', proz);
+    let farbe =
+    proz >= 10? '#d73027':
+    proz >= 6? '#fc8d59':
+    proz >= 2? '#fee08b':
+    proz >= 0? '#ffffbf':
+    proz >= -6? '#d9ef8b':
+    proz >= -10? '#91cf60':
+      '#1a9850';
 
-for (let blick of adlerblicke) {
-  let blickpin = L.marker(
-    [blick.lat, blick.lng]
-  ).addTo(markerGruppe);
-  blickpin.bindPopup(
-    `<h1> Standort ${blick.standort} </h1>
-    <p> Höhe ${blick.seehoehe} m</p>
-    <em> Kunde: ${blick.kunde}</em>`
-  )
-};
+    L.polyline(
+      [
+        [p1.lat,p1.lng],
+        [p2.lat,p2.lng],
+      ], {
+        color:farbe,
+      }
+    ).addTo(karte);
+}
+});
+
+// for (let blick of adlerblicke) {
+//   let blickpin = L.marker(
+//     [blick.lat, blick.lng]
+//   ).addTo(markerGruppe);
+//   blickpin.bindPopup(
+//     `<h1> Standort ${blick.standort} </h1>
+//     <p> Höhe ${blick.seehoehe} m</p>
+//     <em> Kunde: ${blick.kunde}</em>`
+//   )
+// };
 
 // karte.fitBounds(markerGruppe.getBounds());
 // karte.addControl(new L.Control.Fullscreen());
