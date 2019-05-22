@@ -24,7 +24,14 @@
     <link href="plugins/Control.Coordinates.css" rel="stylesheet">
     <script src="plugins/Control.Coordinates.js"> </script>
 
-    </script>
+    <!-- verlinken des GPX plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.4.0/gpx.min.js"></script>
+
+    <!-- D3.js -->
+    <script src="https://unpkg.com/d3@4.13.0/build/d3.min.js" charset="utf-8"></script>
+    <!-- leaflet-elevation -->
+    <link rel="stylesheet" href="https://unpkg.com/@raruto/leaflet-elevation@latest/leaflet-elevation.css" />
+    <script src="https://unpkg.com/@raruto/leaflet-elevation@latest/leaflet-elevation.js"></script>
     <script defer src="main.js"></script>
     </script>
 
@@ -71,9 +78,8 @@
         <!-- TODO: ein Absatz mit der Beschreibung der Sehenswürdigkeit aus der Wikipedia plus einem Link auf die Wikipedia-Seite in der Form "(Quelle: Wikipedia)", das Wort "Wikipedia" als Link -->
 
         <h3>Übersichtskarte</h3>
-        <div id="map" data-lat="47.51854290" data-lng="11.89731620" data-titel="Pinegg" data2-lat="47.52145020" data2-lng="11.78733490" data-titel2="Steinberg">
-
-        </div>
+        <div id="map" data-lat="47.51854290" data-lng="11.89731620" data-titel="Pinegg" data2-lat="47.52145020" data2-lng="11.78733490" data-titel2="Steinberg">    </div>
+        <div id="elevation-div"></div>
         <!-- TODO: ein div-Element mit dem id-Attribut "map" und drei weiteren Attributen data-lat, data-lng und data-title. Die Koordinaten von data-lat und data-lng sind als Dezimalgrad mit einem "." als Komma zu schreiben und aus der Wikipedia zu entnehmen. Das data-title Attribut enthält einen Titel für die oben verwendete Sehenswürdigkeit
         -->
 

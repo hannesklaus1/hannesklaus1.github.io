@@ -97,6 +97,27 @@ Ende.bindPopup(titel2).openPopup();
 
 let markerGruppe = L.featureGroup().addTo(karte);
 
+// gpx track laden.
+var gpx = 'AdlerwegEtappe06.gpx'; // URL to your GPX file or the GPX itself
+new L.GPX(gpx, {
+  async: true,
+  marker_options: {
+    startIconUrl: 'images/pin-icon-start.png',
+    endIconUrl: 'images/pin-icon-end.png',
+    shadowUrl: 'images/pin-shadow.png'
+  }
+}).on('loaded', function(e) {
+  karte.fitBounds(e.target.getBounds());
+}).on('addline', function(e) {
+  console.log('linie geladen');
+  const controlElevation = L.control.elevation({
+    detachedView: true,
+    elevationDiv: "#elevation-div",
+  });
+  controlElevation.addTo(karte);
+  controlElevation.addData(e.line);
+}).addTo(karte);
+
 for (let blick of adlerblicke) {
   let blickpin = L.marker(
     [blick.lat, blick.lng]
@@ -108,11 +129,15 @@ for (let blick of adlerblicke) {
   )
 };
 
-karte.fitBounds(markerGruppe.getBounds());
-karte.addControl(new L.Control.Fullscreen());
-var hash = new L.Hash(karte);
-var coords = new L.Control.Coordinates();
-coords.addTo(karte);
-karte.on('click', function(e) {
-	coords.setCoordinates(e);
-});
+// karte.fitBounds(markerGruppe.getBounds());
+// karte.addControl(new L.Control.Fullscreen());
+// var hash = new L.Hash(karte);
+// var coords = new L.Control.Coordinates();
+// coords.addTo(karte);
+// karte.on('click', function(e) {
+//   coords.setCoordinates(e);
+// });
+// ///Aufrufen des Höhenprofil Plugins
+// //var controlElevation = L.control.elevation({
+//
+// }).addTo(karte);
