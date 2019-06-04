@@ -70,7 +70,9 @@ karte.addControl(new L.Control.Fullscreen());
 //
 //Wikipedia Bounding Box --> artikel Implementierung
 //
-//http://api.geonames.org/wikipediaBoundingBoxJSON?formatted=true&north=44.1&south=-9.9&east=-22.4&west=55.2&username=webmapping&style=full
+//http://api.geonames.org/wikipediaBoundingBoxJSON?formatted=true&north=44.1&south=-9.9&east=-22.4&west=55.2&username=hannesklaus&style=full
+
+
 const wikipediaGruppe= L.featureGroup().addTo(karte);
 layerControl.addOverlay( wikipediaGruppe, "Wiki Artikel");
 
@@ -111,7 +113,7 @@ karte.on("load zoomend moveend", function() {
   }
   console.log(ausschnitte);
 
-  const geonamesUrl = `http://api.geonames.org/wikipediaBoundingBoxJSON?formatted=true&north=${ausschnitte.n}&south=${ausschnitte.s}&east=${ausschnitte.e}&west=${ausschnitte.w}&username=webmapping&style=full&maxRows=5&lang=de`;
+  const geonamesUrl = `http://api.geonames.org/wikipediaBoundingBoxJSON?formatted=true&north=${ausschnitte.n}&south=${ausschnitte.s}&east=${ausschnitte.e}&west=${ausschnitte.w}&username=hannesklaus&style=full&maxRows=5&lang=de`;
 /// die If Abfrage stellt sicher, dass die Wikiartikel nur neu geladen werden wenn sich der Ausschnitt verändert.
   if (geonamesUrl != letzteGeonamesUrl){
     wikipediaArtikelLaden(geonamesUrl);
